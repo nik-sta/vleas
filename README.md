@@ -1,4 +1,11 @@
-# vleas
+ __      ___                
+ \ \    / / |               
+  \ \  / /| | ___  __ _ ___ 
+   \ \/ / | |/ _ \/ _` / __|
+    \  /  | |  __/ (_| \__ \
+     \/   |_|\___|\__,_|___/
+                            
+                            
 
 Vleas is a open source cli for updating Gradle and Maven dependencies.
 
