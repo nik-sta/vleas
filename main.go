@@ -5,6 +5,7 @@ import (
 	"github.com/urfave/cli"
 	"log"
 	"os"
+	"time"
 )
 
 var app = cli.NewApp()
@@ -22,8 +23,14 @@ func main() {
 func info() {
 	app.Name = "Vleas CLI"
 	app.Usage = "Vleas is a open source CLI for updating Gradle and Maven dependencies."
-	app.Author = "Nikola Stanković"
 	app.Version = "0.0.1"
+	app.Compiled = time.Now()
+	app.Authors = []cli.Author{
+		cli.Author{
+			Name:  "Nikola Stanković",
+			Email: "nikola@stankovic.xyz",
+		},
+	}
 }
 
 func commands() {
