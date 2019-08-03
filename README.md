@@ -8,7 +8,7 @@
                    |__/                                            
                                            
 
-Vleas is a open source cli for updating Gradle and Maven dependencies.
+Vleas is a open source CLI for updating Gradle and Maven dependencies.
 
 ## Authors
 
