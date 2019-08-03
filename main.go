@@ -40,8 +40,12 @@ func commands() {
 			Aliases: []string{"u"},
 			Usage:   "Update dependencies",
 			Action: func(c *cli.Context) {
-				fmt.Println("update")
+				update()
 			},
 		},
 	}
+}
+
+func update()  {
+	fmt.Println("update")
 }
