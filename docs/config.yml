@@ -1,4 +1,4 @@
-baseUrl: vleas.org
+baseUrl: "https://nikolastankovic.github.io/vleas/"
 languageCode: en-us
 theme: terminal
 paginate: 5
