@@ -1,0 +1,40 @@
+baseUrl: "/"
+languageCode: en-us
+theme: terminal
+paginate: 5
+publishDir: docs
+
+params:
+  # dir name of your blog content (default is `content/posts`)
+  contentTypeName: posts
+  # ["orange", "blue", "red", "green", "pink"]
+  themeColor: blue
+  # if you set this to 0, only submenu trigger will be visible
+  showMenuItems: 3
+  # set theme to full screen width
+  fullWidthTheme: false
+  # center theme with default width
+  centerTheme: true
+
+languages:
+  en:
+    title: vleas.org
+    subtitle: ''
+    keywords: ''
+    menuMore: Show more
+    readMore: Read more
+    readOtherPosts: Read other posts
+
+    params:
+      logo:
+        logoText: Project Vleas
+        logoHomeLink: /
+
+    menu:
+      main:
+      - identifier: about
+        name: About
+        url: /about
+      - identifier: showcase
+        name: Showcase
+        url: /showcase

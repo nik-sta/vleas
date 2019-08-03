@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>vleas.org</title>
+    <title>Tags on vleas.org</title>
     <link>nikolastankovic.github.io/vleas/tags/</link>
-    <description>Recent content on vleas.org</description>
+    <description>Recent content in Tags on vleas.org</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
@@ -12,14 +12,15 @@
     
     <item>
       <title></title>
-      <link>nikolastankovic.github.io/vleas/posts/my-first-post/</link>
+      <link>nikolastankovic.github.io/vleas/tags/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>nikolastankovic.github.io/vleas/posts/my-first-post/</guid>
+      <guid>nikolastankovic.github.io/vleas/tags/</guid>
       <description></description>
     </item>
     
-    <item>
+  </channel>
+</rss>item>
       <title></title>
       <link>nikolastankovic.github.io/vleas/posts/my-first-post/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
