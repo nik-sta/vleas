@@ -12,6 +12,8 @@ Vleas is an easy to use open source CLI for maintaining dependencies.
 
 ## Supported Build Tools
 
+Vleas is supporting the following build tools:
+
 * Gradle - *in development*
 * Maven - *planned work*
 
