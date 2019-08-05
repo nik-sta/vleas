@@ -10,6 +10,15 @@
 
 Vleas is an easy to use open source CLI for maintaining dependencies.
 
+## Commands
+
+```
+$ vleas --file "../your/build.gradle" update
+```
+```
+$ vleas --file "../your/pom.xml" check
+```
+
 ## Supported Build Tools
 
 Vleas is supporting the following build tools:
