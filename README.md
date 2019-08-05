@@ -30,7 +30,7 @@ Vleas is supporting the following build tools:
 
 * **Nikola Stanković** - *Initial work* - [nikolastankovic](https://github.com/nikolastankovic)
 
-See also the list of [contributors](https://github.com/nikolastankovic/vleas/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/nikolastankovic/vleas/contributors) who participated in this project. ♥
 
 ## License
 
