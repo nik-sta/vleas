@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/urfave/cli"
 	"log"
+	"net/http"
+	"net/url"
 	"os"
 	"time"
 )
@@ -11,6 +13,8 @@ import (
 var app = cli.NewApp()
 
 func main() {
+	searchOnMavenCentral()
+
 	info()
 	commands()
 	flags()
@@ -71,4 +75,28 @@ func update()  {
 
 func check()  {
 	fmt.Println("check dependencies")
+}
+
+func searchOnMavenCentral() {
+	var groupId = "ch.viascom.groundwork"
+	var artifactId = "foxhttp"
+
+	qp := "q=g:\"" + groupId + `"+AND+a:"` + artifactId + `"` +
+		"&rows=20" +
+		"&core=gav"
+
+	u := &url.URL{
+		Scheme:   "http",
+		Host:     "search.maven.org",
+		Path:     "/solrsearch/select",
+		RawQuery: qp,
+	}
+
+	resp, err := http.Get (u.String())
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	log.Println(resp.Request.URL)
+	log.Println(resp)
 }
