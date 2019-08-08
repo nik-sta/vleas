@@ -16,7 +16,7 @@ class Check: CliktCommand(help="Check for new dependency updates") {
     override fun run() {
         echo("Check dependencies in file: " + file.name)
         val response: MavenCentralResponse = MavenCentralApi.retrieveDependency("ch.viascom.groundwork", "foxhttp").getParsedBody(MavenCentralResponse::class.java)
-        println("Version: " + response.response?.docs?.get(0)?.v)
+        println("Version: " + response.response.docs[0].v)
     }
 }
 
