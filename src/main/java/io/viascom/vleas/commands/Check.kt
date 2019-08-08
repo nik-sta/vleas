@@ -7,19 +7,19 @@ import io.viascom.vleas.models.mavencentral.MavenCentralResponse
 import io.viascom.vleas.services.MavenCentralApi
 
 
+class Check : CliktCommand(help = "Check for new dependency updates") {
 
+    private val file by argument("--file", help = "Full path to dependency file").file(
+        exists = true,
+        fileOkay = true,
+        readable = true
+    )
 
-class Check: CliktCommand(help="Check for new dependency updates") {
-
-    val file by argument().file(exists = true, fileOkay = true, readable = true)
 
     override fun run() {
         echo("Check dependencies in file: " + file.name)
-        val response: MavenCentralResponse = MavenCentralApi.retrieveDependency("ch.viascom.groundwork", "foxhttp").getParsedBody(MavenCentralResponse::class.java)
+        val response: MavenCentralResponse = MavenCentralApi.retrieveDependency("ch.viascom.groundwork", "foxhttp")
+            .getParsedBody(MavenCentralResponse::class.java)
         println("Version: " + response.response.docs[0].v)
     }
-}
-
-fun main(args: Array<String>) {
-    Check().main(args)
 }
