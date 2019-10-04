@@ -40,7 +40,7 @@ This project is licensed under the WTFPL License - see the [LICENSE](LICENSE) fi
 
 ## Support ♥
 
-If vleas helped you in any way and you wanna support it, you can always leave a tip.
+If Vleas helped you in any way and you want to support it, you can always leave a tip.
 ```
 ₿ 39nNECMiNivqt6wVdLG8oxfti8PjmdDjNv (BTC)
 ```
