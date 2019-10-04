@@ -10,6 +10,8 @@
 
 Vleas is an easy to use open source CLI for maintaining dependencies.
 
+[![Build Status](https://travis-ci.com/nikolastankovic/vleas.svg?branch=master)](https://travis-ci.com/nikolastankovic/vleas)
+
 ## Commands
 
 ```
@@ -35,3 +37,7 @@ See also the list of [contributors](https://github.com/nikolastankovic/vleas/con
 ## License
 
 This project is licensed under the WTFPL License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If vleas helped you in any way and you wanna support it, you can always leave a tip at ₿ 39nNECMiNivqt6wVdLG8oxfti8PjmdDjNv (BTC)
