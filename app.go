@@ -38,7 +38,6 @@ func main() {
 			Usage:   "check for new deps",
 			Action: func(c *cli.Context) error {
 				check(c.GlobalString("file"))
-				printDeps()
 				return nil
 			},
 		},
@@ -62,12 +61,6 @@ func main() {
 	}
 }
 
-func printDeps() {
-	for i := range dependencies {
-		fmt.Printf("group: %s name: %s version: %s --> %s\n", dependencies[i][1], dependencies[i][2], dependencies[i][3], dependencies[i][4])
-	}
-}
-
 func check(file string) {
 	contentBytes, _ := ioutil.ReadFile(file)
 	content := string(contentBytes)
@@ -78,11 +71,12 @@ func check(file string) {
 	for i := range deps {
 		group := deps[i][1]
 		name := deps[i][2]
-		latestVersion := newDepVersion(group, name)
+		latestVersion := fetchLatestDeps(group, name)
 
 		deps[i] = append(deps[i], latestVersion)
 
 		if validDep(deps[i]) {
+			fmt.Printf("group: %s name: %s version: %s --> %s\n", deps[i][1], deps[i][2], deps[i][3], deps[i][4])
 			dependencies = append(dependencies, deps[i])
 		}
 	}
@@ -107,7 +101,7 @@ func update(file string) {
 	fmt.Println("update deps from file: " + file)
 }
 
-func newDepVersion(group, name string) string {
+func fetchLatestDeps(group, name string) string {
 	url := "http://search.maven.org/solrsearch/select?q=g:%22#GROUP%22+AND+a:%22#NAME%22&"
 	url = strings.Replace(url, "#GROUP", group, 1)
 	url = strings.Replace(url, "#NAME", name, 1)
