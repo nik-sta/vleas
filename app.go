@@ -13,7 +13,14 @@ import (
 	"strings"
 )
 
-var dependencies = make([][]string, 0)
+type dependency struct {
+	Group string
+	Name string
+	CurrentVersion string
+	LatestVersion string
+}
+
+var dependencies = make([]dependency, 0)
 
 func main() {
 	app := cli.NewApp()
@@ -76,9 +83,18 @@ func check(file string) {
 		deps[i] = append(deps[i], latestVersion)
 
 		if validDep(deps[i]) {
-			fmt.Printf("group: %s name: %s version: %s --> %s\n", deps[i][1], deps[i][2], deps[i][3], deps[i][4])
-			dependencies = append(dependencies, deps[i])
+			dependencies = append(dependencies, dependency{
+				Group:   deps[i][1],
+				Name:    deps[i][2],
+				CurrentVersion: deps[i][3],
+				LatestVersion: deps[i][4],
+			})
 		}
+	}
+	removeDuplicates(dependencies)
+
+	for _, dep := range dependencies {
+		fmt.Printf("group: %s name: %s version: %s --> %s\n", dep.Group, dep.Name, dep.CurrentVersion, dep.LatestVersion)
 	}
 }
 
@@ -117,4 +133,23 @@ func fetchLatestDeps(group, name string) string {
 	}
 
 	return gjson.Get(string(body), "response.docs.0.latestVersion").String()
+}
+
+func removeDuplicates(elements []dependency) []dependency {   // change string to int here if required
+	// Use map to record duplicates as we find them.
+	encountered := map[dependency]bool{} // change string to int here if required
+	var result []dependency              // change string to int here if required
+
+	for v := range elements {
+		if encountered[elements[v]] == true {
+			// Do not add duplicate.
+		} else {
+			// Record this element as an encountered element.
+			encountered[elements[v]] = true
+			// Append to result slice.
+			result = append(result, elements[v])
+		}
+	}
+	// Return the new slice.
+	return result
 }
