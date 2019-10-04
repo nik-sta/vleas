@@ -80,7 +80,7 @@ func update(file string) {
 }
 
 func newDepVersion(group, name string) string {
-	url := "http://search.maven.org/solrsearch/select?q=g:%22#GROUP%22+AND+a:%22#NAME%22&rows=20&core=gav"
+	url := "http://search.maven.org/solrsearch/select?q=g:%22#GROUP%22+AND+a:%22#NAME%22&"
 	url = strings.Replace(url, "#GROUP", group, 1)
 	url = strings.Replace(url, "#NAME", name, 1)
 
@@ -94,5 +94,5 @@ func newDepVersion(group, name string) string {
 		log.Fatalln(err)
 	}
 
-	return gjson.Get(string(body), "response.docs.1.v").String()
+	return gjson.Get(string(body), "response.docs.0.latestVersion").String()
 }
