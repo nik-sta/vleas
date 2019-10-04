@@ -13,6 +13,8 @@ import (
 	"strings"
 )
 
+var deps = make([][]string, 4)
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "vleas"
@@ -64,7 +66,7 @@ func check(file string) {
 	content := string(contentBytes)
 
 	regex := regexp.MustCompile("(?P<group>[^\"$\\(\\)\\[\\]\\{\\}']+):(?P<name>[^\"$\\(\\)\\[\\]\\{\\}']+):(?P<version>[^\"$\\(\\)\\[\\]\\{\\}']+)")
-	deps := regex.FindAllStringSubmatch(content, -1)
+	deps = regex.FindAllStringSubmatch(content, -1)
 	for i := range deps {
 		group := deps[i][1]
 		name := deps[i][2]

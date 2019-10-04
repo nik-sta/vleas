@@ -21,12 +21,19 @@ $ vleas --file "../your/build.gradle" update
 $ vleas --file "../your/pom.xml" check
 ```
 
-## Supported Build Tools
+## Supported Build Tools & Repositories
 
 Vleas is supporting the following build tools:
 
 * Gradle - *in development*
 * Maven - *planned work*
+* ... and more :)
+
+Supported repositories:
+
+* Maven Central
+* jcenter - *planned*
+* private sona types
 
 ## Authors
 
