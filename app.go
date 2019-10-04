@@ -72,7 +72,7 @@ func check(file string) {
 	contentBytes, _ := ioutil.ReadFile(file)
 	content := string(contentBytes)
 
-	regex := regexp.MustCompile("(?P<group>[^\"$\\(\\)\\[\\]\\{\\}']+):(?P<name>[^\"$\\(\\)\\[\\]\\{\\}']+):(?P<version>[^\"$\\(\\)\\[\\]\\{\\}']+)")
+	regex := regexp.MustCompile("(?P<group>[^\"$,;\\(\\)\\[\\]\\{\\}']+):(?P<name>[^\"$,;\\(\\)\\[\\]\\{\\}']+):(?P<version>[^\"$,;\\(\\)\\[\\]\\{\\}']+)")
 	deps := regex.FindAllStringSubmatch(content, -1)
 
 	for i := range deps {
