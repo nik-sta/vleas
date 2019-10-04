@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-var deps = make([][]string, 4)
+var dependencies = make([][]string, 0)
 
 func main() {
 	app := cli.NewApp()
@@ -22,12 +22,12 @@ func main() {
 	app.Version = "0.0.1"
 	app.Author = "Nikola Stanković"
 	app.Email = "nikola@stankovic.xyz"
-	app.Description = "Vleas is an easy to use open source CLI for maintaining dependencies."
+	app.Description = "Vleas is an easy to use open source CLI for maintaining deps."
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "file, f",
-			Usage: "Load dependencies from `FILE`",
+			Usage: "Load deps from `FILE`",
 		},
 	}
 
@@ -35,16 +35,17 @@ func main() {
 		{
 			Name:    "check",
 			Aliases: []string{"c"},
-			Usage:   "check for new dependencies",
+			Usage:   "check for new deps",
 			Action: func(c *cli.Context) error {
 				check(c.GlobalString("file"))
+				printDeps()
 				return nil
 			},
 		},
 		{
 			Name:    "update",
 			Aliases: []string{"u"},
-			Usage:   "update all dependencies to latest version",
+			Usage:   "update all deps to latest version",
 			Action: func(c *cli.Context) error {
 				update(c.GlobalString("file"))
 				return nil
@@ -61,24 +62,49 @@ func main() {
 	}
 }
 
+func printDeps() {
+	for i := range dependencies {
+		fmt.Printf("group: %s name: %s version: %s --> %s\n", dependencies[i][1], dependencies[i][2], dependencies[i][3], dependencies[i][4])
+	}
+}
+
 func check(file string) {
 	contentBytes, _ := ioutil.ReadFile(file)
 	content := string(contentBytes)
 
 	regex := regexp.MustCompile("(?P<group>[^\"$\\(\\)\\[\\]\\{\\}']+):(?P<name>[^\"$\\(\\)\\[\\]\\{\\}']+):(?P<version>[^\"$\\(\\)\\[\\]\\{\\}']+)")
-	deps = regex.FindAllStringSubmatch(content, -1)
+	deps := regex.FindAllStringSubmatch(content, -1)
+
 	for i := range deps {
 		group := deps[i][1]
 		name := deps[i][2]
-		newVersion :=newDepVersion(group, name)
-		deps[i] = append(deps[i], newVersion)
+		latestVersion := newDepVersion(group, name)
 
-		fmt.Printf("group: %s name: %s version: %s --> %s\n", deps[i][1], deps[i][2], deps[i][3], deps[i][4])
+		deps[i] = append(deps[i], latestVersion)
+
+		if validDep(deps[i]) {
+			dependencies = append(dependencies, deps[i])
+		}
 	}
 }
 
+func validDep(dep []string) bool {
+	currentVersion := dep[3]
+	latestVersion := dep[4]
+
+	if strings.EqualFold(currentVersion, latestVersion) {
+		return false
+	}
+
+	if latestVersion == "" {
+		return false
+	}
+
+	return true
+}
+
 func update(file string) {
-	fmt.Println("update dependencies from file: " + file)
+	fmt.Println("update deps from file: " + file)
 }
 
 func newDepVersion(group, name string) string {
