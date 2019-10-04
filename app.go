@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/urfave/cli"
 	"log"
 	"os"
@@ -29,6 +30,7 @@ func main() {
 			Aliases: []string{"c"},
 			Usage:   "check for new dependencies",
 			Action:  func(c *cli.Context) error {
+				check(c.GlobalString("file"))
 				return nil
 			},
 		},
@@ -37,6 +39,7 @@ func main() {
 			Aliases: []string{"u"},
 			Usage:   "update all dependencies to latest version",
 			Action:  func(c *cli.Context) error {
+				update(c.GlobalString("file"))
 				return nil
 			},
 		},
@@ -49,4 +52,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func check(file string)  {
+	fmt.Println("check dependencies from file: " + file)
+}
+
+func update(file string)  {
+	fmt.Println("update dependencies from file: " + file)
 }
