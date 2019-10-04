@@ -91,7 +91,7 @@ func check(file string) {
 			})
 		}
 	}
-	removeDuplicates(dependencies)
+	dependencies = removeDuplicates(dependencies)
 
 	for _, dep := range dependencies {
 		fmt.Printf("group: %s name: %s version: %s --> %s\n", dep.Group, dep.Name, dep.CurrentVersion, dep.LatestVersion)
