@@ -14,13 +14,14 @@ import (
 )
 
 type dependency struct {
-	Group string
-	Name string
+	Group          string
+	Name           string
 	CurrentVersion string
-	LatestVersion string
+	LatestVersion  string
 }
 
-var dependencies = make([]dependency, 0)
+var resolvedDependencies = make([]dependency, 0)
+var unresolvedDependencies = make([]dependency, 0)
 
 func main() {
 	app := cli.NewApp()
@@ -83,18 +84,40 @@ func check(file string) {
 		deps[i] = append(deps[i], latestVersion)
 
 		if validDep(deps[i]) {
-			dependencies = append(dependencies, dependency{
-				Group:   deps[i][1],
-				Name:    deps[i][2],
+			resolvedDependencies = append(resolvedDependencies, dependency{
+				Group:          deps[i][1],
+				Name:           deps[i][2],
 				CurrentVersion: deps[i][3],
-				LatestVersion: deps[i][4],
+				LatestVersion:  deps[i][4],
 			})
+		} else {
+			if strings.EqualFold(deps[i][3], deps[i][4]) == false {
+				unresolvedDependencies = append(unresolvedDependencies, dependency{
+					Group:          deps[i][1],
+					Name:           deps[i][2],
+					CurrentVersion: deps[i][3],
+					LatestVersion:  deps[i][4],
+				})
+			}
 		}
 	}
-	dependencies = removeDuplicates(dependencies)
+	resolvedDependencies = removeDuplicates(resolvedDependencies)
 
-	for _, dep := range dependencies {
+	if len(resolvedDependencies) > 0 {
+		fmt.Printf("\nVleas found %d dependency update(s):\n\n", len(resolvedDependencies))
+	} else {
+		fmt.Printf("\nGreat! Your project is up to date :)")
+	}
+
+	for _, dep := range resolvedDependencies {
 		fmt.Printf("group: %s name: %s version: %s --> %s\n", dep.Group, dep.Name, dep.CurrentVersion, dep.LatestVersion)
+	}
+
+	if len(unresolvedDependencies) > 0 {
+		fmt.Printf("\nThe following dependencies have not been able to check:\n\n")
+		for _, dep := range unresolvedDependencies {
+			fmt.Printf("group: %s name: %s version: %s\n", dep.Group, dep.Name, dep.CurrentVersion)
+		}
 	}
 }
 
@@ -135,7 +158,7 @@ func fetchLatestDeps(group, name string) string {
 	return gjson.Get(string(body), "response.docs.0.latestVersion").String()
 }
 
-func removeDuplicates(elements []dependency) []dependency {   // change string to int here if required
+func removeDuplicates(elements []dependency) []dependency { // change string to int here if required
 	// Use map to record duplicates as we find them.
 	encountered := map[dependency]bool{} // change string to int here if required
 	var result []dependency              // change string to int here if required
