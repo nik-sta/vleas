@@ -77,7 +77,7 @@ func check(file string) {
 func detectBuildTool(file string) string {
 	var buildTool = ""
 
-	if strings.Contains(file, ".gradle") {
+	if strings.Contains(file, "build.gradle") {
 		buildTool = "Gradle"
 	}
 
@@ -95,7 +95,7 @@ func printResult() {
 	if len(resolvedDependencies) > 0 {
 		fmt.Printf("\nVleas found %d dependency update(s):\n\n", len(resolvedDependencies))
 	} else {
-		fmt.Printf("\nGreat! Your project is up to date :)")
+		fmt.Printf("\nGreat! Your project is up to date :)\n")
 	}
 
 	for _, dep := range resolvedDependencies {
