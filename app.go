@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/rhea-0b1/vleas/model"
+	"github.com/rhea-0b1/vleas/util"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli"
 	"io/ioutil"
@@ -13,15 +15,8 @@ import (
 	"strings"
 )
 
-type dependency struct {
-	Group          string
-	Name           string
-	CurrentVersion string
-	LatestVersion  string
-}
-
-var resolvedDependencies = make([]dependency, 0)
-var unresolvedDependencies = make([]dependency, 0)
+var resolvedDependencies = make([]model.Dependency, 0)
+var unresolvedDependencies = make([]model.Dependency, 0)
 
 func main() {
 	app := cli.NewApp()
@@ -84,7 +79,7 @@ func check(file string) {
 		deps[i] = append(deps[i], latestVersion)
 
 		if validDep(deps[i]) {
-			resolvedDependencies = append(resolvedDependencies, dependency{
+			resolvedDependencies = append(resolvedDependencies, model.Dependency{
 				Group:          deps[i][1],
 				Name:           deps[i][2],
 				CurrentVersion: deps[i][3],
@@ -92,7 +87,7 @@ func check(file string) {
 			})
 		} else {
 			if strings.EqualFold(deps[i][3], deps[i][4]) == false {
-				unresolvedDependencies = append(unresolvedDependencies, dependency{
+				unresolvedDependencies = append(unresolvedDependencies, model.Dependency{
 					Group:          deps[i][1],
 					Name:           deps[i][2],
 					CurrentVersion: deps[i][3],
@@ -101,7 +96,7 @@ func check(file string) {
 			}
 		}
 	}
-	resolvedDependencies = removeDuplicates(resolvedDependencies)
+	resolvedDependencies = util.RemoveDuplicates(resolvedDependencies)
 
 	if len(resolvedDependencies) > 0 {
 		fmt.Printf("\nVleas found %d dependency update(s):\n\n", len(resolvedDependencies))
@@ -156,23 +151,4 @@ func fetchLatestDeps(group, name string) string {
 	}
 
 	return gjson.Get(string(body), "response.docs.0.latestVersion").String()
-}
-
-func removeDuplicates(elements []dependency) []dependency { // change string to int here if required
-	// Use map to record duplicates as we find them.
-	encountered := map[dependency]bool{} // change string to int here if required
-	var result []dependency              // change string to int here if required
-
-	for v := range elements {
-		if encountered[elements[v]] == true {
-			// Do not add duplicate.
-		} else {
-			// Record this element as an encountered element.
-			encountered[elements[v]] = true
-			// Append to result slice.
-			result = append(result, elements[v])
-		}
-	}
-	// Return the new slice.
-	return result
 }
