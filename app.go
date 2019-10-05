@@ -16,7 +16,7 @@ var unresolvedDependencies = make([]model.Dependency, 0)
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "vleas"
+	app.Name = "Vleas"
 	app.Usage = "be always up to date, extremely fast ;)"
 	app.Version = "0.0.1"
 	app.Author = "Nikola Stanković"
