@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"sort"
+	"strings"
 )
 
 var resolvedDependencies = make([]model.Dependency, 0)
@@ -60,13 +61,31 @@ func main() {
 }
 
 func check(file string) {
-	buildTool := "Gradle"
+	buildTool := detectBuildTool(file)
+
 	switch buildTool {
 	case "Gradle":
 		gradle.Handle(file)
+		printResult()
+	case "Maven":
+		println("Sorry :( Maven will be supported soon.")
+	default:
+		println("Sorry :( We are not supporting this type of dependency file ...")
+	}
+}
+
+func detectBuildTool(file string) string {
+	var buildTool = ""
+
+	if strings.Contains(file, ".gradle") {
+		buildTool = "Gradle"
 	}
 
-	printResult()
+	if strings.Contains(file, "pom.xml") {
+		buildTool = "Maven"
+	}
+
+	return buildTool
 }
 
 func printResult() {
